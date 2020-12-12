@@ -14,13 +14,13 @@ function c84508300.initial_effect(c)
 	e1:SetTarget(c84508300.sumtg)
 	e1:SetOperation(c84508300.sumop)
 	c:RegisterEffect(e1)
-	--On Summon Destruction (not working)
+	--On Summon Destruction (working)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(84508300,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,84508300 + 1)
 	e2:SetCondition(c84508300.descon)
 	e2:SetTarget(c84508300.destg)
@@ -49,22 +49,15 @@ end
 --eff 2
 
 function c84508300.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_EFFECT) and re and re:GetHandler():IsSetCard(0x867)
+	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x867)
 end
-
 function c84508300.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then 
-		return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp)
-	end
-	if chk==0 then 
-		return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil)
-	end
+	if chkc then return chkc:IsOnField() end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,0,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetFirst():GetBaseDefense())
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
-
 function c84508300.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
