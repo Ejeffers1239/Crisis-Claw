@@ -28,7 +28,7 @@ function c84508301.initial_effect(c)
 	e3:SetOperation(c84508301.banop)
 	c:RegisterEffect(e1)
 	end
-	
+--eff 1 and 2	
 function c84508301.thfilter(c)
 	return c:IsSetCard(0x867) and c:IsType(TYPE_MONSTER) and not c:IsCode(84508301) and c:IsAbleToHand()
 end
@@ -44,5 +44,25 @@ function c84508301.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+	end
+end
+--eff 3
+function c84508301.banfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x867)
+end
+function c84508301.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c84508301.desfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c84508301.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsPlayerCanDraw(tp,1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,c84508301.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+end
+
+function c84508301.banop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		Duel.Draw(tp,1,REASON_EFFECT)~=0
 	end
 end
