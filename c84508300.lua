@@ -27,7 +27,7 @@ function c84508300.initial_effect(c)
 	e2:SetOperation(c84508300.desop)
 	c:RegisterEffect(e2)
 end
-	
+--eff 1
 function c84508300.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x867)
 end	
@@ -45,7 +45,7 @@ function c84508300.sumop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-
+--eff 2
 function c84508300.descon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSetCard(0x867)
 end
