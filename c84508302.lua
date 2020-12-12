@@ -1,7 +1,7 @@
 --Crisis Claw - Vainglory
 --Ejeffers1239
 function c84508302.initial_effect(c)
-	--to grave effect (not working)
+	--to grave effect (working)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(84508302,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)

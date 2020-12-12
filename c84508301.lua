@@ -1,7 +1,7 @@
 --Crisis Claw - Corruption
 --Ejeffers1239
 function c84508301.initial_effect(c)
-	--"Stratos" effect (not working)
+	--"Stratos" effect (working)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(84508301,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
