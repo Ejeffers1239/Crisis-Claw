@@ -1,4 +1,8 @@
+--Crisis Claw - Violence
+--Ejeffers1239
+
 function c84508300.initial_effect(c)
+	--Summon Effect with Volcanic Scattershot Condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(84508300,1))
 	e1:SetCategory(CATEGORY_SUMMON)
@@ -10,7 +14,7 @@ function c84508300.initial_effect(c)
 	e1:SetTarget(c84508300.sumtg)
 	e1:SetOperation(c84508300.sumop)
 	c:RegisterEffect(e1)
-
+	--On Summon Destruction
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(84508300,0))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
