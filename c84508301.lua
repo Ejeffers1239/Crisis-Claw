@@ -27,10 +27,10 @@ function c84508301.initial_effect(c)
 	e3:SetCost(aux.bfgcost)
 	e3:SetOperation(c84508301.banop)
 	c:RegisterEffect(e1)
-	end
+end
 --eff 1 and 2	
 function c84508301.thfilter(c)
-	return c:IsSetCard(0x867) and c:IsType(TYPE_MONSTER) and not c:IsCode(84508301) and c:IsAbleToHand()
+	return c:IsSetCard(0x867) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(84508301) 
 end
 
 function c84508301.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

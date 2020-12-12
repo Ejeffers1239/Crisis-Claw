@@ -29,7 +29,7 @@ function c84508302.initial_effect(c)
 end
 --eff 1
 function c84508302.tgfilter(c)
-	return c:IsSetCard(0x867) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x867) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and not c:IsCode(84508302) 
 end
 
 function c84508302.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -46,22 +46,22 @@ function c84508302.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 --eff 2
-function c26236560.desfilter(c,tp)
+function c84508302.desfilter(c,tp)
 	return Duel.GetMZoneCount(tp,c)>0 and c:IsSetCard(0x867)
 end
 
-function c26236560.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c26236560.desfilter(chkc,tp) end
+function c84508302.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c84508302.desfilter(chkc,tp) end
 	if chk==0 then 
-		return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c26236560.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
+		return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c84508302.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c26236560.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,c84508302.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 
-function c26236560.desop(e,tp,eg,ep,ev,re,r,rp)
+function c84508302.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
