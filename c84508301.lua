@@ -1,7 +1,7 @@
 --Crisis Claw - Corruption
 --Ejeffers1239
 function c84508301.initial_effect(c)
-	--"Stratos" effect
+	--"Stratos" effect (not working)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(84508301,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -15,14 +15,15 @@ function c84508301.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--Banish From GY efffect
+	
+	--Banish From GY efffect (untested)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(84508301,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,84508301)
+	e3:SetCountLimit(1,84508301 + 1)
 	e3:SetTarget(c84508301.bantg)
 	e3:SetCost(aux.bfgcost)
 	e3:SetOperation(c84508301.banop)
@@ -51,11 +52,11 @@ function c84508301.banfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x867)
 end
 function c84508301.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c84508301.desfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c84508301.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c84508301.banfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c84508301.banfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c84508301.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c84508301.banfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
@@ -63,6 +64,6 @@ end
 function c84508301.banop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		Duel.Draw(tp,1,REASON_EFFECT)~=0
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

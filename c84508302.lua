@@ -1,7 +1,7 @@
 --Crisis Claw - Vainglory
 --Ejeffers1239
 function c84508302.initial_effect(c)
-	--to grave effect
+	--to grave effect (not working)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(84508302,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -16,13 +16,14 @@ function c84508302.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	
+	--Destroy and SS effect (working)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(84508302,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_HAND)
-	e3:SetCountLimit(1,84508302)
+	e3:SetCountLimit(1,84508302 + 1)
 	e3:SetTarget(c84508302.destg)
 	e3:SetOperation(c84508302.desop)
 	c:RegisterEffect(e3)
