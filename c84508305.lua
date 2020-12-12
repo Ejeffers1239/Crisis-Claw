@@ -1,3 +1,5 @@
+--Crisis Claw - Deciet
+--Ejeffers1239
 function c84508305.initial_effect(c)
 	--reveal and add/send (untested, and also probably no way this works)
 	local e1=Effect.CreateEffect(c)
@@ -9,7 +11,7 @@ function c84508305.initial_effect(c)
 	e1:SetTarget(c84508305.target)
 	e1:SetOperation(c84508305.activate)
 	c:RegisterEffect(e1)
-	--Banish to set an equip (untested)
+	--Banish to set an equip (untested, also probably doesn't work lol)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(84508305,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -49,23 +51,23 @@ function c84508305.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 --eff 2
 
-function c65330383.setfilter(c)
+function c84508305.setfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x867) and c:IsSSetable()
 end
 
-function c65330383.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c84508305.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
-		return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c65330383.setfilter(chkc)
+		return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c84508305.setfilter(chkc)
 	end
 	if chk==0 then 
-		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c65330383.setfilter,tp,LOCATION_GRAVE,0,1,nil)
+		return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c84508305.setfilter,tp,LOCATION_GRAVE,0,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectTarget(tp,c65330383.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c84508305.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 
-function c65330383.setop(e,tp,eg,ep,ev,re,r,rp)
+function c84508305.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SSet(tp,tc)
